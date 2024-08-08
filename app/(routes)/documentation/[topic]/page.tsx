@@ -1,10 +1,10 @@
-// app/documentation/[topic]/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon, PlusIcon } from '@heroicons/react/20/solid';
 import RichTextEditor from '../../../components/RichTextEditor';
+import parse from 'html-react-parser';
 
 interface Document {
     id: number;
@@ -26,7 +26,6 @@ let mockDocumentation: MockDocumentation = {
         { id: 3, title: 'Patrones de diseño', content: 'Contenido sobre patrones...' },
         { id: 4, title: 'Arquitectura de software', content: 'Contenido sobre arquitectura...' },
     ],
-    // Añade más temas según sea necesario
 };
 
 // Función para normalizar el tema
@@ -111,7 +110,9 @@ export default function DocumentationPage() {
                 {documents.map((doc: Document) => (
                     <div key={doc.id} className="border p-4 rounded-lg shadow">
                         <h2 className="text-xl font-semibold mb-2">{doc.title}</h2>
-                        <p className="text-gray-600 mb-4">{doc.content.substring(0, 100)}...</p>
+                        <div className="text-gray-600 mb-4">
+                            {parse(doc.content)}
+                        </div>
                         <Link href={`/documentation/${topic}/${doc.id}`} className="text-white mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium shadow transition-colors">
                             Leer más
                         </Link>

@@ -1,4 +1,3 @@
-// components/DocumentationSection.tsx
 import { useState } from "react";
 
 type CardData = {

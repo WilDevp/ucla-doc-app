@@ -1,4 +1,3 @@
-// components/RoadmapSection.tsx
 import RoadmapCard from './RoadmapCard';
 
 type CardData = {

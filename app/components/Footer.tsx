@@ -1,4 +1,3 @@
-// components/Footer.tsx
 export default function Footer() {
     return (
         <footer className="py-6 w-full flex items-center px-4 md:px-6 border-t">
