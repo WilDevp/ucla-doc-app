@@ -120,7 +120,7 @@ export default function DocumentationPage() {
                 ))}
             </div>
             {showEditor && (
-                <div className="mt-8">
+                <div className="mt-20">
                     <input
                         type="text"
                         value={newDocTitle}
@@ -131,7 +131,7 @@ export default function DocumentationPage() {
                     <RichTextEditor value={newDocContent} onChange={setNewDocContent} />
                     <button
                         onClick={handleAddDocument}
-                        className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-green-300 hover:text-black mr-2"
+                        className="bg-gray-800 text-white px-4 py-2 mt-4 rounded hover:bg-green-300 hover:text-black mr-2"
                     >
                         Guardar
                     </button>

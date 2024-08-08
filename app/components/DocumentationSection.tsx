@@ -71,42 +71,4 @@ export default function DocumentationSection() {
         setDocumentContent('');
         setSelectedTopic('');
     };
-
-    return (
-        <section className="w-full py-12 md:py-24 lg:py-32">
-            <div className="max-w-5xl mx-auto px-4 md:px-6">
-                <h2 className="text-3xl font-bold mb-6">Añadir Documentación</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        type="text"
-                        value={documentTitle}
-                        onChange={(e) => setDocumentTitle(e.target.value)}
-                        placeholder="Título del documento"
-                        className="w-full p-2 border rounded"
-                    />
-                    <textarea
-                        value={documentContent}
-                        onChange={(e) => setDocumentContent(e.target.value)}
-                        placeholder="Contenido del documento"
-                        className="w-full p-2 border rounded h-32"
-                    />
-                    <select
-                        value={selectedTopic}
-                        onChange={(e) => setSelectedTopic(e.target.value)}
-                        className="w-full p-2 border rounded"
-                    >
-                        <option value="">Selecciona un tema</option>
-                        {cardsData.map((card, index) => (
-                            <option key={index} value={card.title}>
-                                {card.title}
-                            </option>
-                        ))}
-                    </select>
-                    <button type="submit" className="bg-primary text-white px-4 py-2 rounded">
-                        Guardar Documentación
-                    </button>
-                </form>
-            </div>
-        </section>
-    );
 }
