@@ -1,11 +1,10 @@
+// app/documentation/[topic]/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-
-// Importación dinámica del editor de texto enriquecido
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { ArrowLeftIcon, PlusIcon } from '@heroicons/react/20/solid';
+import RichTextEditor from '../../../components/RichTextEditor';
 
 interface Document {
     id: number;
@@ -93,25 +92,33 @@ export default function DocumentationPage() {
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-6">Documentación para: {topic.replace(/-/g, ' ')}</h1>
+            <div className="flex items-center justify-between mb-6">
+                <Link href="/dashboard" className="text-blue-500 hover:underline flex items-center">
+                    <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                    Volver al Dashboard
+                </Link>
+                {!showEditor && (
+                    <button
+                        onClick={() => setShowEditor(true)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center"
+                    >
+                        <PlusIcon className="h-5 w-5 mr-2" />
+                        Añadir Documentación
+                    </button>
+                )}
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
                 {documents.map((doc: Document) => (
                     <div key={doc.id} className="border p-4 rounded-lg shadow">
                         <h2 className="text-xl font-semibold mb-2">{doc.title}</h2>
                         <p className="text-gray-600 mb-4">{doc.content.substring(0, 100)}...</p>
-                        <Link href={`/documentation/${topic}/${doc.id}`} className="text-blue-500 hover:underline">
+                        <Link href={`/documentation/${topic}/${doc.id}`} className="text-white mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium shadow transition-colors">
                             Leer más
                         </Link>
                     </div>
                 ))}
             </div>
-            {!showEditor ? (
-                <button
-                    onClick={() => setShowEditor(true)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    Añadir Documentación
-                </button>
-            ) : (
+            {showEditor && (
                 <div className="mt-8">
                     <input
                         type="text"
@@ -120,15 +127,10 @@ export default function DocumentationPage() {
                         placeholder="Título del documento"
                         className="w-full p-2 mb-4 border rounded"
                     />
-                    <ReactQuill
-                        theme="snow"
-                        value={newDocContent}
-                        onChange={setNewDocContent}
-                        className="mb-4"
-                    />
+                    <RichTextEditor value={newDocContent} onChange={setNewDocContent} />
                     <button
                         onClick={handleAddDocument}
-                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mr-2"
+                        className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-green-300 hover:text-black mr-2"
                     >
                         Guardar
                     </button>
@@ -140,11 +142,6 @@ export default function DocumentationPage() {
                     </button>
                 </div>
             )}
-            <div className="mt-8">
-                <Link href="/dashboard" className="text-blue-500 hover:underline">
-                    Volver al Dashboard
-                </Link>
-            </div>
         </div>
     );
 }
